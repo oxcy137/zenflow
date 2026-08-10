@@ -1,0 +1,179 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "tools": {
+    "browserbase_*": false,
+    "playwright_*": false,
+    "filesystem_*": false,
+    "memory_*": false,
+    "fetch_*": false,
+    "git_*": false,
+    "local-browser_*": false,
+    "engram_*": false,
+    "chrome-mcp_*": false,
+    "github-mcp_*": false
+  },
+  "agent": {
+    "browserbase": {
+      "description": "browserbase operations",
+      "mode": "subagent",
+      "tools": {
+        "browserbase_*": true
+      }
+    },
+    "playwright": {
+      "description": "playwright operations",
+      "mode": "subagent",
+      "tools": {
+        "playwright_*": true
+      }
+    },
+    "filesystem": {
+      "description": "filesystem operations",
+      "mode": "subagent",
+      "tools": {
+        "filesystem_*": true
+      }
+    },
+    "memory": {
+      "description": "memory operations",
+      "mode": "subagent",
+      "tools": {
+        "memory_*": true
+      }
+    },
+    "fetch": {
+      "description": "fetch operations",
+      "mode": "subagent",
+      "tools": {
+        "fetch_*": true
+      }
+    },
+    "git": {
+      "description": "git operations",
+      "mode": "subagent",
+      "tools": {
+        "git_*": true
+      }
+    },
+    "engram": {
+      "description": "engram operations",
+      "mode": "subagent",
+      "tools": {
+        "engram_*": true
+      }
+    },
+    "chrome-mcp": {
+      "description": "chrome-mcp operations",
+      "mode": "subagent",
+      "tools": {
+        "chrome-mcp_*": true
+      }
+    },
+    "github-mcp": {
+      "description": "github-mcp operations",
+      "mode": "subagent",
+      "tools": {
+        "github-mcp_*": true
+      }
+    },
+    "local-browser": {
+      "description": "local browser testing operations",
+      "mode": "subagent",
+      "tools": {
+        "local-browser_*": true
+      }
+    }
+  },
+  "mcp": {
+    "browserbase": {
+      "type": "local",
+      "command": ["npx", "-y", "@browserbasehq/mcp"],
+      "enabled": true,
+      "env": {
+        "BROWSERBASE_API_KEY": "${BROWSERBASE_API_KEY}",
+        "BROWSERBASE_PROJECT_ID": "${BROWSERBASE_PROJECT_ID}"
+      }
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": true,
+      "env": {}
+    },
+    "puppeteer": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-puppeteer"],
+      "enabled": false,
+      "env": {}
+    },
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/data/data/com.termux/files/home/zenflow"],
+      "enabled": true,
+      "env": {}
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": false,
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "memory": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-memory"],
+      "enabled": true,
+      "env": {}
+    },
+    "brave-search": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-brave-search"],
+      "enabled": false,
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "google-maps": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-google-maps"],
+      "enabled": false,
+      "env": {
+        "GOOGLE_MAPS_API_KEY": "${GOOGLE_MAPS_API_KEY}"
+      }
+    },
+    "slack": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-slack"],
+      "enabled": false,
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      }
+    },
+    "postgres": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-postgres", "${POSTGRES_CONNECTION_STRING}"],
+      "enabled": false,
+      "env": {}
+    },
+    "fetch": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-fetch"],
+      "enabled": true,
+      "env": {}
+    },
+    "git": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-git"],
+      "enabled": true,
+      "env": {}
+    },
+    "local-browser": {
+      "type": "local",
+      "command": ["node", "/data/data/com.termux/files/home/zenflow/.opencode/mcp/local-browser/index.js"],
+      "enabled": true,
+      "env": {}
+    }
+  }
+}

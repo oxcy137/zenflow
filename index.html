@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZenFlow — Meditación Guiada</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <style>        /* access gate */
+        .agate{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;background:#fff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:opacity .5s ease,visibility .5s ease}
+        .agate.hide{opacity:0;visibility:hidden;pointer-events:none}
+        .agate-box{width:min(92vw,380px);text-align:center;padding:44px 36px 38px;background:#fff;border:1px solid #e5e5e5;border-radius:24px;box-shadow:0 16px 50px rgba(0,0,0,.12);animation:agateIn .6s cubic-bezier(.16,1,.3,1)}
+        @keyframes agateIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+        .agate-lock{width:64px;height:64px;margin:0 auto 18px;border-radius:20px;background:linear-gradient(135deg,#8B0A1E,#DC143C);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(220,20,60,.25)}
+        .agate-lock svg{width:28px;height:28px;fill:#fff}
+        .agate-title{font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:800;color:#1a1a2e}
+        .agate-sub{font-size:13.5px;color:#8a8a9a;margin:8px 0 22px;line-height:1.5}
+        .agate-field{position:relative;margin-bottom:16px}
+        .agate-field input{width:100%;padding:14px 16px 14px 46px;border-radius:14px;border:1px solid #e5e5e5;background:#fafafa;color:#1a1a2e;font-size:14px;outline:none;transition:border-color .25s,box-shadow .25s;font-family:Arial,sans-serif}
+        .agate-field input:focus{border-color:#DC143C;box-shadow:0 0 0 4px rgba(220,20,60,.1)}
+        .agate-field svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:#8a8a9a;fill:none;stroke-width:2;stroke-linecap:round}
+        .agate-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#DC143C,#8B0A1E);color:#fff;font-size:14.5px;font-weight:700;font-family:Arial,sans-serif;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 10px 24px rgba(220,20,60,.28)}
+        .agate-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(220,20,60,.38)}
+        .agate-btn:active{transform:translateY(0)}
+        .agate-err{display:none;font-size:12.5px;color:#DC143C;margin-top:12px;font-weight:600}
+        .agate-hint{font-size:11.5px;color:#8a8a9a;margin-top:16px;letter-spacing:.3px}</style>
+</head>
+  <body>
+    <div class="agate" id="agate">
+        <div class="agate-box">
+            <div class="agate-lock"><svg viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2m-9 0h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/></svg></div>
+            <div class="agate-title">Acceso Privado</div>
+            <div class="agate-sub">Esta demo es privada.<br>Ingresá la contraseña para verla.</div>
+            <div class="agate-field">
+                <svg viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M2.06 12.35a1 1 0 0 1 0-.7C4.03 7.82 7.85 5 12 5c4.15 0 7.97 2.82 9.94 6.65a1 1 0 0 1 0 .7C19.97 16.18 16.15 19 12 19c-4.15 0-7.97-2.82-9.94-6.65z"/></svg>
+                <input type="password" id="agatePass" placeholder="Contraseña" autocomplete="off" enterkeyhint="go">
+            </div>
+            <button class="agate-btn" id="agateBtn">Entrar</button>
+            <div class="agate-err" id="agateErr">Contraseña incorrecta</div>
+            <div class="agate-hint">Solo clientes con acceso privado</div>
+        </div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  
+<script>
+(function(){
+    var PASS_HASH=3329928180;
+    function dh(s){var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0}return h}
+    var SK='axg_'+location.hostname.replace(/[^a-z0-9]/gi,'_');
+    function unlock(){
+        var a=document.getElementById('agate');if(a)a.classList.add('hide');
+        var pl=document.getElementById('preloader');if(pl)pl.style.display='none';
+        try{localStorage.setItem(SK,'1')}catch(e){}
+    }
+    function go(){
+        var v=document.getElementById('agatePass').value.trim();if(!v)return;
+        if(dh(v)===PASS_HASH){unlock()}
+        else{var e=document.getElementById('agateErr');e.style.display='block';setTimeout(function(){e.style.display='none'},1800)}
+    }
+    var saved=false;try{saved=localStorage.getItem(SK)==='1'}catch(e){}
+    if(saved){unlock()}
+    else{
+        document.getElementById('agateBtn').addEventListener('click',go);
+        document.getElementById('agatePass').addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key==='Go')go()});
+        setTimeout(function(){document.getElementById('agatePass').focus()},350);
+    }
+})();
+</script>
+</body>
+</html>

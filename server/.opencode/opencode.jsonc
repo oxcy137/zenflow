@@ -1,0 +1,30 @@
+{
+  "tools": {
+    "engram_*": false,
+    "chrome-mcp_*": false,
+    "github-mcp_*": false
+  },
+  "agent": {
+    "engram": {
+      "description": "engram operations",
+      "mode": "subagent",
+      "tools": {
+        "engram_*": true
+      }
+    },
+    "chrome-mcp": {
+      "description": "chrome-mcp operations",
+      "mode": "subagent",
+      "tools": {
+        "chrome-mcp_*": true
+      }
+    },
+    "github-mcp": {
+      "description": "github-mcp operations",
+      "mode": "subagent",
+      "tools": {
+        "github-mcp_*": true
+      }
+    }
+  }
+}

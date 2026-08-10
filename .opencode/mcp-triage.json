@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "autoCreated": {
+    "engram": "engram",
+    "chrome-mcp": "chrome-mcp",
+    "github-mcp": "github-mcp",
+    "browserbase": "browserbase",
+    "playwright": "playwright",
+    "filesystem": "filesystem",
+    "memory": "memory",
+    "fetch": "fetch",
+    "git": "git"
+  }
+}

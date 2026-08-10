@@ -1,0 +1,248 @@
+import { useState } from 'react';
+import { PlayIcon, PauseIcon, MusicIcon, OmIcon, LeafIcon, WaveIcon, VolumeOffIcon, TuningForkIcon } from '@/components/Icons';
+import { useLanguage } from '@/context/LanguageContext';
+
+interface Track {
+  id: string;
+  title: string;
+  category: string;
+  duration: string;
+  icon: 'om' | 'music';
+  youtubeId?: string;
+  start?: number;
+}
+
+const tracks: Track[] = [
+  { id: 'nature-forest', title: 'music.track.forest', category: 'nature', duration: '30:00', icon: 'music', youtubeId: 'lSMnowpc5nI' },
+  { id: 'nature-ocean', title: 'music.track.ocean', category: 'nature', duration: '30:00', icon: 'music', youtubeId: 'WHPEKLQID4U' },
+  { id: 'nature-rain', title: 'music.track.rain', category: 'nature', duration: '30:00', icon: 'music', youtubeId: 'jIvQlyIH-xs' },
+  { id: 'nature-river', title: 'music.track.river', category: 'nature', duration: '60:00', icon: 'music', youtubeId: 'RtVhM2o573A' },
+  { id: 'nature-birds', title: 'music.track.birds', category: 'nature', duration: '60:00', icon: 'music', youtubeId: 'EHklxmBvzwc' },
+  { id: 'nature-wind', title: 'music.track.wind', category: 'nature', duration: '60:00', icon: 'music', youtubeId: 'qBAPsQkS8QI' },
+  { id: 'nature-thunder', title: 'music.track.thunder', category: 'nature', duration: '60:00', icon: 'music', youtubeId: 'EY1NLcx3BuU' },
+  { id: 'nature-fire', title: 'music.track.fire', category: 'nature', duration: '60:00', icon: 'music', youtubeId: 'uUHrQutwdvE' },
+  { id: 'binaural-delta', title: 'music.track.delta', category: 'binaural', duration: '60:00', icon: 'music', youtubeId: 'gnyXd_fM9k4' },
+  { id: 'binaural-theta', title: 'music.track.theta', category: 'binaural', duration: '45:00', icon: 'music', youtubeId: 'qQ_W1w9v-2Y' },
+  { id: 'binaural-alpha', title: 'music.track.alpha', category: 'binaural', duration: '60:00', icon: 'music', youtubeId: 'izzvYLSCKx4' },
+  { id: 'binaural-beta', title: 'music.track.beta', category: 'binaural', duration: '60:00', icon: 'music', youtubeId: 'HA6nSQawROM' },
+  { id: 'binaural-gamma', title: 'music.track.gamma', category: 'binaural', duration: '60:00', icon: 'music', youtubeId: 'DHGPl4vJXU4' },
+  { id: 'instrumental-flute', title: 'music.track.flute', category: 'instrumental', duration: '20:00', icon: 'music', youtubeId: 'h57jU2w5KXM' },
+  { id: 'instrumental-bowls', title: 'music.track.bowl', category: 'instrumental', duration: '25:00', icon: 'music', youtubeId: 'PDI3mdiQuG0' },
+  { id: 'mantra-aum', title: 'music.track.maha', category: 'mantras', duration: '15:00', icon: 'om', youtubeId: '7zHDL0_sRGI' },
+  { id: 'mantra-gayatri', title: 'music.track.gayatri', category: 'mantras', duration: '15:00', icon: 'om', youtubeId: 'ynC4VY10qYk' },
+  { id: 'silence', title: 'music.track.silence', category: 'silence', duration: '20:00', icon: 'music' },
+  { id: 'solfeggio-396', title: 'music.track.solf396', category: 'solfeggio', duration: '60:00', icon: 'music', youtubeId: 'WGFhyb_HY80' },
+  { id: 'solfeggio-528', title: 'music.track.solf528', category: 'solfeggio', duration: '60:00', icon: 'music', youtubeId: 'CyNdyQOfgpU' },
+  { id: 'solfeggio-639', title: 'music.track.solf639', category: 'solfeggio', duration: '60:00', icon: 'music', youtubeId: 'yiGweP--BRs' },
+  { id: 'solfeggio-741', title: 'music.track.solf741', category: 'solfeggio', duration: '60:00', icon: 'music', youtubeId: 'S1hoBiXXSjM' },
+  { id: 'solfeggio-852', title: 'music.track.solf852', category: 'solfeggio', duration: '60:00', icon: 'music', youtubeId: 'dJoXVILGeKQ' },
+  { id: 'solfeggio-963', title: 'music.track.solf963', category: 'solfeggio', duration: '60:00', icon: 'music', youtubeId: '2JI7Q38KKuw' },
+];
+
+const categories = ['nature', 'binaural', 'instrumental', 'mantras', 'silence', 'solfeggio'] as const;
+
+const categoryIcons: Record<string, React.ReactNode> = {
+  nature: <LeafIcon style={{ width: 14, height: 14 }} />,
+  binaural: <WaveIcon style={{ width: 14, height: 14 }} />,
+  instrumental: <MusicIcon style={{ width: 14, height: 14 }} />,
+  mantras: <OmIcon style={{ width: 14, height: 14 }} />,
+  silence: <VolumeOffIcon style={{ width: 14, height: 14 }} />,
+  solfeggio: <TuningForkIcon style={{ width: 14, height: 14 }} />,
+};
+
+function TrackBars() {
+  return (
+    <div style={{ display: 'flex', gap: 2, height: 14, alignItems: 'flex-end' }}>
+      {[0, 1, 2].map(i => (
+        <div
+          key={i}
+          style={{
+            width: 3,
+            height: '100%',
+            background: 'rgba(255,255,255,0.6)',
+            borderRadius: 1,
+            animation: `breathe-in 0.8s ease-in-out ${i * 0.2}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function MusicPage() {
+  const { t } = useLanguage();
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>('nature');
+
+  const togglePlay = (track: Track) => {
+    if (currentTrack?.id === track.id && playing) {
+      setPlaying(false);
+      return;
+    }
+    setCurrentTrack(track);
+    setPlaying(true);
+  };
+
+  const filtered = tracks.filter(t => t.category === activeCategory);
+
+  return (
+    <div
+      className="page fade-in"
+      style={{ paddingBottom: 100, paddingTop: '22vh' }}
+    >
+      <div style={{ paddingTop: 28, position: 'relative' }}>
+
+        <h1 className="shimmer" data-text={t('music.title')} style={{ fontSize: '1.5rem' }}>{t('music.title')}</h1>
+        <p style={{ color: 'var(--text-muted)', marginTop: 4, fontSize: '0.85rem' }}>{t('music.subtitle')}</p>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          gap: 8,
+          marginTop: 20,
+          overflowX: 'auto',
+          paddingBottom: 8,
+          scrollbarWidth: 'none',
+        }}
+      >
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={activeCategory === cat ? 'pill-active' : 'pill'}
+          >
+            <span style={{ marginRight: 4, display: 'flex' }}>{categoryIcons[cat]}</span>
+            {t('music.category.' + cat)}
+          </button>
+        ))}
+      </div>
+
+          <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            {filtered.map(track => {
+              const isCurrent = currentTrack?.id === track.id;
+              const Icon = track.icon === 'om' ? OmIcon : MusicIcon;
+              return (
+                <div
+                  key={track.id}
+                  onClick={() => togglePlay(track)}
+                  className={`card${isCurrent ? ' card-active' : ''}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    padding: '12px 14px',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s ease',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.08) 100%)',
+                    backdropFilter: 'blur(24px)',
+                    WebkitBackdropFilter: 'blur(24px)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                  }}
+                >
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '50%',
+                  background: isCurrent ? 'var(--red-400)' : 'rgba(255,255,255,0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  flexShrink: 0,
+                  transition: '0.25s',
+                }}
+              >
+                {isCurrent && playing ? <TrackBars /> : <Icon style={{ width: 18, height: 18 }} />}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text)', lineHeight: 1.2 }}>{t(track.title)}</div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>{t('music.category.' + track.category)}</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{track.duration}</span>
+                {isCurrent && playing ? (
+                  <PauseIcon style={{ width: 16, height: 16, color: 'var(--text)' }} />
+                ) : (
+                  <PlayIcon style={{ width: 16, height: 16, color: 'var(--text)' }} />
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {currentTrack && (
+        <div
+          className="card glass-depth"
+          style={{
+            marginTop: 20,
+            padding: 16,
+            border: '1px solid var(--red-400)',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.08) 100%)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)' }}>{t(currentTrack.title)}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('music.category.' + currentTrack.category)}</div>
+            </div>
+            <button
+              onClick={() => togglePlay(currentTrack)}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                background: 'var(--red-400)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'white',
+                transition: '0.2s',
+              }}
+            >
+              {playing ? <PauseIcon style={{ width: 18, height: 18 }} /> : <PlayIcon style={{ width: 18, height: 18 }} />}
+            </button>
+          </div>
+
+          {playing && currentTrack.youtubeId ? (
+            <div style={{ borderRadius: 12, overflow: 'hidden', aspectRatio: '16/9' }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${currentTrack.youtubeId}?autoplay=1&loop=1&playlist=${currentTrack.youtubeId}&playsinline=1&rel=0${currentTrack.start ? `&start=${currentTrack.start}` : ''}`}
+                style={{ width: '100%', height: '100%', border: 'none' }}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                height: 4,
+                background: 'rgba(204,0,0,0.2)',
+                borderRadius: 2,
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <div
+                style={{
+                  width: playing ? '100%' : '0%',
+                  height: '100%',
+                  background: 'var(--red-400)',
+                  borderRadius: 2,
+                  transition: 'width 30s linear',
+                }}
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

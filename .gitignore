@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+*.db
+*.apk
+*.zip
+public/videos/
+public/*.zip
+old.apk
+index.html.bak
