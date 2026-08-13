@@ -7,18 +7,18 @@ export interface SectionBackground {
 }
 
 const HIGH_SPEC_DEFAULTS: Record<string, SectionBackground> = {
-  home: { type: 'video', src: '/videos/zen-bg.mp4', label: 'Galaxia Vintage' },
-  practicas: { type: 'video', src: '/videos/practicas-bg.mp4', label: 'Amanecer' },
-  music: { type: 'video', src: '/videos/music-bg.mp4', label: 'Audio-reactivo' },
+  home: { type: 'video', src: './videos/zen-bg.mp4', label: 'Galaxia Vintage' },
+  practicas: { type: 'video', src: './videos/practicas-bg.mp4', label: 'Amanecer' },
+  music: { type: 'video', src: './videos/music-bg.mp4', label: 'Audio-reactivo' },
   stats: { type: 'image', src: '/bg-stats.jpg', label: 'Estadísticas' },
-  misticismo: { type: 'video', src: '/videos/misticismo-bg.mp4', label: 'Místico' },
+  misticismo: { type: 'video', src: './videos/misticismo-bg.mp4', label: 'Místico' },
 };
 
 const VIDEO_OPTIONS: SectionBackground[] = [
-  { type: 'video', src: '/videos/zen-bg.mp4', label: 'Galaxia Vintage' },
-  { type: 'video', src: '/videos/music-bg.mp4', label: 'Audio-reactivo' },
-  { type: 'video', src: '/videos/practicas-bg.mp4', label: 'Amanecer' },
-  { type: 'video', src: '/videos/misticismo-bg.mp4', label: 'Místico' },
+  { type: 'video', src: './videos/zen-bg.mp4', label: 'Galaxia Vintage' },
+  { type: 'video', src: './videos/music-bg.mp4', label: 'Audio-reactivo' },
+  { type: 'video', src: './videos/practicas-bg.mp4', label: 'Amanecer' },
+  { type: 'video', src: './videos/misticismo-bg.mp4', label: 'Místico' },
 ];
 
 const IMAGE_OPTIONS: SectionBackground[] = [

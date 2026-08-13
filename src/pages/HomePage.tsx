@@ -290,7 +290,7 @@ export function HomePage({ onSelect, user, onLogout, streak, sessions }: HomePag
               {m.youtubeId && (() => {
                 const vid = getMeditationVideo(m, lang);
                 const isOffline = localStorage.getItem('zenflow-offline-mode') === 'true';
-                const localPath = `/videos/practices/${vid.youtubeId}.mp4`;
+                const localPath = `./videos/practices/${vid.youtubeId}.mp4`;
 
                 if (isOffline) {
                   return (

@@ -103,7 +103,7 @@ function YogaCard({ m, expanded, onClick }: { m: Meditation; expanded: boolean; 
         {expanded ? (
           offline ? (
             <video
-              src={`/videos/practices/${m.youtubeId}.mp4`}
+              src={`./videos/practices/${m.youtubeId}.mp4`}
               autoPlay
               muted
               loop
@@ -123,7 +123,7 @@ function YogaCard({ m, expanded, onClick }: { m: Meditation; expanded: boolean; 
           <>
             {offline ? (
               <video
-                src={`/videos/practices/${m.youtubeId}.mp4`}
+                src={`./videos/practices/${m.youtubeId}.mp4`}
                 loop
                 muted
                 playsInline

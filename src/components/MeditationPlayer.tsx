@@ -184,7 +184,7 @@ export function MeditationPlayer({ meditation, onComplete, onBack, autoStart, in
       </div>
 
       {currentStep?.type === 'video' && meditation.youtubeId ? (
-        (() => { const v = getMeditationVideo(meditation, lang); return <VideoPlayer key={videoKey} autoPlay={videoKey > 0} youtubeId={v.youtubeId!} videoStart={v.videoStart} localPath={`/videos/practices/${v.youtubeId}.mp4`} title={meditation.title} onHalfway={advanceStep} />; })()
+        (() => { const v = getMeditationVideo(meditation, lang); return <VideoPlayer key={videoKey} autoPlay={videoKey > 0} youtubeId={v.youtubeId!} videoStart={v.videoStart} localPath={`./videos/practices/${v.youtubeId}.mp4`} title={meditation.title} onHalfway={advanceStep} />; })()
       ) : (
         <BreathingCircle
           type={(currentStep?.type === 'video' ? 'silence' : currentStep?.type) ?? 'silence'}
