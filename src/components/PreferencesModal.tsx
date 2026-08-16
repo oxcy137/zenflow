@@ -1,11 +1,23 @@
 import { useState, useEffect } from 'react';
-import { CloseIcon } from '@/components/Icons';
+import { CloseIcon, CrownIcon, MusicIcon, SparklesIcon, LeafIcon, PotionIcon } from '@/components/Icons';
 import { useLanguage } from '@/context/LanguageContext';
 import { useBackgrounds } from '@/context/BackgroundContext';
+import { useMenuRotation } from '@/hooks/useMenuRotation';
 
 interface PreferencesModalProps {
   onClose: () => void;
 }
+
+const PREVIEW_BASE_ANGLES = [-45, -75, -105, -135, -165];
+const PREVIEW_RADIUS = 55;
+
+const PREVIEW_ITEMS = [
+  { id: 'home', Icon: LeafIcon },
+  { id: 'practicas', Icon: SparklesIcon },
+  { id: 'music', Icon: MusicIcon },
+  { id: 'misticismo', Icon: PotionIcon },
+  { id: 'premium', Icon: CrownIcon },
+];
 
 const SECTIONS = [
   { id: 'home', label: 'Zen' },
@@ -38,6 +50,7 @@ const LANG_OPTIONS = [
 export function PreferencesModal({ onClose }: PreferencesModalProps) {
   const { t, lang, setLang } = useLanguage();
   const { backgrounds, setBackground, allOptions } = useBackgrounds();
+  const { rotation, setRotation } = useMenuRotation();
   const [offlineMode, setOfflineMode] = useState(() => localStorage.getItem('zenflow-offline-mode') === 'true');
   const [clientMode, setClientMode] = useState(() => localStorage.getItem('zenflow-client-mode') === 'true');
   const [selectedSection, setSelectedSection] = useState('home');
@@ -258,6 +271,82 @@ export function PreferencesModal({ onClose }: PreferencesModalProps) {
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', margin: '4px 0' }} />
+
+          <div>
+            <h3 style={{ color: 'white', fontSize: '0.9rem', margin: '0 0 8px' }}>Rotación del menú</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0' }}>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem', fontWeight: 600 }}>◀</span>
+              <input
+                type="range"
+                min="-180"
+                max="180"
+                value={rotation}
+                onChange={(e) => setRotation(parseInt(e.target.value, 10))}
+                style={{
+                  flex: 1, height: 4, appearance: 'none', WebkitAppearance: 'none',
+                  background: 'rgba(255,255,255,0.15)', borderRadius: 2, outline: 'none', cursor: 'pointer',
+                }}
+              />
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem', fontWeight: 600 }}>▶</span>
+              <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 700, minWidth: 34, textAlign: 'center' }}>{rotation}°</span>
+            </div>
+
+            <div
+              style={{
+                position: 'relative',
+                width: 180, height: 180,
+                margin: '12px auto 0',
+                borderRadius: '50%',
+                background: 'rgba(0,0,0,0.35)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                overflow: 'hidden',
+              }}
+            >
+              <div style={{ position: 'absolute', left: 90, top: 90, transform: `rotate(${rotation}deg)`, transformOrigin: '0 0' }}>
+                <svg
+                  viewBox="0 0 260 260"
+                  style={{ position: 'absolute', left: -70, top: -70, width: 140, height: 140, pointerEvents: 'none' }}
+                >
+                  <circle cx="130" cy="130" r="129" fill="none" stroke="none" />
+                  <circle cx="130" cy="130" r="70" fill="none" stroke="none" />
+                  {Array.from({ length: 12 }).map((_, i) => {
+                    const angle = (i * 30 - 90) * Math.PI / 180;
+                    const x1 = 130 + 70 * Math.cos(angle);
+                    const y1 = 130 + 70 * Math.sin(angle);
+                    const x2 = 130 + 129 * Math.cos(angle);
+                    const y2 = 130 + 129 * Math.sin(angle);
+                    return (
+                      <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#FFFFFF" strokeWidth="1.5" />
+                    );
+                  })}
+                </svg>
+                {PREVIEW_ITEMS.map((item, i) => {
+                  const Icon = item.Icon;
+                  const angleRad = (PREVIEW_BASE_ANGLES[i] ?? -120) * Math.PI / 180;
+                  const x = Math.round(PREVIEW_RADIUS * Math.cos(angleRad));
+                  const y = Math.round(PREVIEW_RADIUS * Math.sin(angleRad));
+                  return (
+                    <div
+                      key={item.id}
+                      title={item.id}
+                      style={{
+                        position: 'absolute',
+                        left: x, top: y,
+                        transform: 'translate(-50%, -50%)',
+                      }}
+                    >
+                      <span style={{ display: 'inline-block', transform: `rotate(${-rotation}deg)` }}>
+                        <Icon style={{ width: 20, height: 20, color: 'white' }} />
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

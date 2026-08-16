@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { CrownIcon, MusicIcon, SparklesIcon, LeafIcon, PotionIcon } from '@/components/Icons';
 import { useLanguage } from '@/context/LanguageContext';
+import { useMenuRotation } from '@/hooks/useMenuRotation';
 import type { Page } from '@/types';
 
 interface FloatingMenuProps {
@@ -17,9 +18,7 @@ const RADIUS = 97;
 export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
-  const [rotation, setRotation] = useState(() => {
-    try { return parseInt(localStorage.getItem('fab-menu-rotation') ?? '0', 10); } catch { return 0; }
-  });
+  const { rotation } = useMenuRotation();
   const btnRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -45,12 +44,6 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
     }
   };
 
-  const handleRotationChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseInt(e.target.value, 10);
-    setRotation(val);
-    localStorage.setItem('fab-menu-rotation', String(val));
-  }, []);
-
   const items = [
     { id: 'nav-home', label: t('fab.home'), icon: LeafIcon },
     { id: 'nav-practicas', label: t('fab.practicas'), icon: SparklesIcon },
@@ -66,7 +59,7 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
           className="menu-rotation-wrapper"
             style={{
               position: 'absolute', right: 28, bottom: 28,
-              transform: `rotate(${rotation}deg) scale(${open ? 1 : 0})`,
+              transform: `scale(${open ? 1 : 0})`,
               transformOrigin: '0 0',
               opacity: open ? 1 : 0,
               pointerEvents: open ? 'auto' : 'none',
@@ -82,6 +75,11 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
             mask: `radial-gradient(circle, transparent ${INNER_DIVIDER / 2}px, black ${INNER_DIVIDER / 2 + 1}px)`,
             pointerEvents: 'none',
           }} />
+          <div style={{
+            position: 'absolute', left: 0, top: 0,
+            transform: `rotate(${rotation}deg)`,
+            transformOrigin: '0 0',
+          }}>
           <svg
             viewBox="0 0 260 260"
             style={{
@@ -131,25 +129,10 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
               );
             })}
           </div>
+          </div>
         </div>
       </div>
 
-      <div style={{ position: 'fixed', right: 100, bottom: 28, zIndex: 300, display: 'flex', alignItems: 'center', gap: 4, opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none', transition: 'opacity 0.3s', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)', borderRadius: 12, padding: '4px 8px' }}>
-        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.6rem', fontWeight: 600 }}>◀</span>
-        <input
-          type="range"
-          min="-180"
-          max="180"
-          value={rotation}
-          onChange={handleRotationChange}
-          style={{
-            width: 80, height: 4, appearance: 'none', WebkitAppearance: 'none',
-            background: 'rgba(255,255,255,0.15)', borderRadius: 2, outline: 'none', cursor: 'pointer',
-          }}
-        />
-        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.6rem', fontWeight: 600 }}>▶</span>
-        <span style={{ color: 'white', fontSize: '0.65rem', fontWeight: 700, minWidth: 30, textAlign: 'center' }}>{rotation}°</span>
-      </div>
       <button
         ref={btnRef}
         onClick={() => setOpen(o => !o)}
