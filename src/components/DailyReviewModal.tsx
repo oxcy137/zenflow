@@ -91,7 +91,7 @@ export function DailyReviewModal({ onClose }: DailyReviewModalProps) {
           background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           border: 'none', borderRadius: 24, padding: 28, maxWidth: 400, width: '100%',
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
             <button className="btn-icon" onClick={() => setSelectedReview(null)} style={{ width: 36, height: 36 }}>
@@ -198,7 +198,7 @@ export function DailyReviewModal({ onClose }: DailyReviewModalProps) {
           background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           border: 'none', borderRadius: 24, padding: 28, maxWidth: 400, width: '100%',
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h2 style={{ margin: 0, fontSize: '1.1rem' }}>{t('review.historyTitle2')}</h2>
@@ -248,7 +248,7 @@ export function DailyReviewModal({ onClose }: DailyReviewModalProps) {
           background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           border: 'none', borderRadius: 24, padding: 32, maxWidth: 340, width: '100%',
-          textAlign: 'center', animation: 'scaleIn 0.3s ease-out',
+          textAlign: 'center', animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}>
           <div style={{ fontSize: '3rem', marginBottom: 12 }}>{moodEmoji(mood)}</div>
           <h2 style={{ margin: '0 0 8px' }}>{t('review.saved')}</h2>
@@ -282,7 +282,7 @@ export function DailyReviewModal({ onClose }: DailyReviewModalProps) {
           WebkitBackdropFilter: 'blur(16px)',
           border: 'none', borderRadius: 24, padding: 28, maxWidth: 400, width: '100%',
           maxHeight: '85vh', overflowY: 'auto',
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
           <h2 style={{ margin: 0, fontSize: '1.2rem' }}>{t('review.title')}</h2>

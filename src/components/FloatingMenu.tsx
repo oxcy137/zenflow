@@ -18,9 +18,12 @@ const RADIUS = 97;
 export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
-  const { rotation } = useMenuRotation();
+  const { rotation, setRotation } = useMenuRotation();
   const btnRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const wheelRef = useRef<HTMLDivElement>(null);
+  const rotationRef = useRef(rotation);
+  rotationRef.current = rotation;
 
   const close = () => setOpen(false);
 
@@ -34,6 +37,17 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
     };
     document.addEventListener('click', handler);
     return () => document.removeEventListener('click', handler);
+  }, [open]);
+
+  useEffect(() => {
+    const el = wheelRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      setRotation(rotationRef.current + e.deltaY * 0.15);
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
   }, [open]);
 
   const handleClick = (id: string) => {
@@ -56,14 +70,16 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
     <>
       <div ref={menuRef} className={`menu-container${open ? ' open' : ''}`}>
         <div
+          ref={wheelRef}
           className="menu-rotation-wrapper"
-            style={{
-              position: 'absolute', right: 28, bottom: 28,
-              transform: `scale(${open ? 1 : 0})`,
-              transformOrigin: '0 0',
-              opacity: open ? 1 : 0,
-              pointerEvents: open ? 'auto' : 'none',
-            }}
+          style={{
+            position: 'absolute', right: 28, bottom: 28,
+            transform: `scale(${open ? 1 : 0})`,
+            transformOrigin: '0 0',
+            opacity: open ? 1 : 0,
+            pointerEvents: open ? 'auto' : 'none',
+            userSelect: 'none',
+          }}
         >
           <div style={{
             position: 'absolute', left: -MAIN_CIRCLE / 2, top: -MAIN_CIRCLE / 2,
@@ -73,7 +89,8 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
             WebkitBackdropFilter: 'blur(12px)',
             WebkitMask: `radial-gradient(circle, transparent ${INNER_DIVIDER / 2}px, black ${INNER_DIVIDER / 2 + 1}px)`,
             mask: `radial-gradient(circle, transparent ${INNER_DIVIDER / 2}px, black ${INNER_DIVIDER / 2 + 1}px)`,
-            pointerEvents: 'none',
+            pointerEvents: 'auto',
+            zIndex: 0,
           }} />
           <div style={{
             position: 'absolute', left: 0, top: 0,
@@ -101,7 +118,7 @@ export function FloatingMenu({ onPremium, onNavigate }: FloatingMenuProps) {
               );
             })}
           </svg>
-          <div style={{ position: 'absolute', left: 0, top: 0 }}>
+          <div style={{ position: 'absolute', left: 0, top: 0, zIndex: 2 }}>
             {items.map((item, i) => {
               const Icon = item.icon;
               const angleRad = (BASE_ANGLES[i] ?? -120) * Math.PI / 180;

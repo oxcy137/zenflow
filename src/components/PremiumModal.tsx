@@ -51,7 +51,7 @@ export function PremiumModal({ onClose, onUnlock }: PremiumModalProps) {
           maxWidth: 360,
           width: '100%',
           textAlign: 'center',
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
           position: 'relative',
         }}
       >

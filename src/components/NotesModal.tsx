@@ -73,7 +73,7 @@ export function NotesModal({ onClose }: NotesModalProps) {
           width: '100%',
           maxHeight: '85vh',
           display: 'flex', flexDirection: 'column',
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>

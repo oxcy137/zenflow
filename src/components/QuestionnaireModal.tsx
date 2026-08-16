@@ -97,7 +97,7 @@ export function QuestionnaireModal({ onClose }: QuestionnaireModalProps) {
           maxWidth: 360, width: '100%',
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', gap: 20,
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}>
         <div style={{
           width: 80, height: 80, borderRadius: '50%',
@@ -161,7 +161,7 @@ export function QuestionnaireModal({ onClose }: QuestionnaireModalProps) {
         padding: '32px 28px',
         maxWidth: 420, width: '100%',
         alignSelf: 'center',
-        animation: 'scaleIn 0.3s ease-out',
+        animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
       }}>
       <div style={{ marginBottom: 24 }}>
         <div style={{

@@ -27,7 +27,7 @@ export function SupportModal({ onClose }: SupportModalProps) {
           padding: 28,
           maxWidth: 400,
           width: '100%',
-          animation: 'scaleIn 0.3s ease-out',
+          animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>

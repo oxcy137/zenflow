@@ -56,7 +56,7 @@ export function DonationsModal({ onClose }: DonationsModalProps) {
           background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           border: 'none', borderRadius: 24, padding: 32, maxWidth: 340, width: '100%',
-          textAlign: 'center', animation: 'scaleIn 0.3s ease-out',
+          textAlign: 'center', animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         }}>
           <HeartOutlineIcon style={{ width: 48, height: 48, color: 'white', marginBottom: 12 }} />
           <h2 style={{ margin: '0 0 8px' }}>{t('donations.thankYou')}</h2>
@@ -83,7 +83,7 @@ export function DonationsModal({ onClose }: DonationsModalProps) {
         WebkitBackdropFilter: 'blur(16px)',
         border: 'none', borderRadius: 24, padding: 28, maxWidth: 380, width: '100%',
         maxHeight: '85vh', overflowY: 'auto',
-        animation: 'scaleIn 0.3s ease-out',
+        animation: 'scaleInPremium 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h2 style={{ margin: 0, fontSize: '1.2rem' }}>

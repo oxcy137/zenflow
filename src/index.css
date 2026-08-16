@@ -264,7 +264,9 @@ body {
   border-radius: var(--radius, 16px);
   padding: 20px;
   box-shadow: var(--glass-shadow);
-  transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 [data-theme="dark"] .card {
   background: #ffffff08;
@@ -286,6 +288,7 @@ body {
 }
 .card:hover {
   box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
 }
 .top-nav {
   background: var(--glass-bg);
@@ -1180,6 +1183,24 @@ button:disabled {
     transform: scale(1);
   }
 }
+
+@keyframes scaleInPremium {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(18px);
+    filter: blur(6px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.015) translateY(-3px);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
 .challenge-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -1342,3 +1363,18 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .btn-primary,
+  .btn-ghost,
+  .btn-icon {
+    transition: none;
+  }
+  .card:hover,
+  .btn-primary:hover,
+  .btn-ghost:hover,
+  .btn-icon:hover {
+    transform: none;
+  }
+}
