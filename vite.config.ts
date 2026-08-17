@@ -31,17 +31,19 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: /\.(mp4|jpg|jpeg|png)$/,
-            handler: 'CacheFirst',
+            handler: 'NetworkFirst',
             options: {
               cacheName: 'media',
+              networkTimeoutSeconds: 10,
               expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 90 },
             },
           },
           {
             urlPattern: /\/videos\//,
-            handler: 'CacheFirst',
+            handler: 'NetworkFirst',
             options: {
               cacheName: 'videos',
+              networkTimeoutSeconds: 10,
               expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 90 },
             },
           },
