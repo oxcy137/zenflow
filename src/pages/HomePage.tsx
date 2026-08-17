@@ -124,7 +124,7 @@ function FlipCard({ children, className = '', style, idx = 0, onTiltReady, onTog
         </button>
         <img
           className="flip-card-back-face"
-          src="/images/card-back.jpg"
+          src="./images/card-back.jpg"
           alt=""
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',

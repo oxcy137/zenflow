@@ -10,7 +10,7 @@ const HIGH_SPEC_DEFAULTS: Record<string, SectionBackground> = {
   home: { type: 'video', src: './videos/zen-bg.mp4', label: 'Galaxia Vintage' },
   practicas: { type: 'video', src: './videos/practicas-bg.mp4', label: 'Amanecer' },
   music: { type: 'video', src: './videos/music-bg.mp4', label: 'Audio-reactivo' },
-  stats: { type: 'image', src: '/bg-stats.jpg', label: 'Estadísticas' },
+  stats: { type: 'image', src: './bg-stats.jpg', label: 'Estadísticas' },
   misticismo: { type: 'video', src: './videos/misticismo-bg.mp4', label: 'Místico' },
 };
 
@@ -22,20 +22,20 @@ const VIDEO_OPTIONS: SectionBackground[] = [
 ];
 
 const IMAGE_OPTIONS: SectionBackground[] = [
-  { type: 'image', src: '/bg-home.jpg', label: 'Zen' },
-  { type: 'image', src: '/bg-practicas.jpg', label: 'Prácticas' },
-  { type: 'image', src: '/bg-music.jpg', label: 'Música' },
-  { type: 'image', src: '/bg-stats.jpg', label: 'Estadísticas' },
-  { type: 'image', src: '/bg-1.jpg', label: 'Galaxia Púrpura' },
-  { type: 'image', src: '/bg-2.jpg', label: 'Nebulosa' },
-  { type: 'image', src: '/bg-3.jpg', label: 'Espacio Profundo' },
-  { type: 'image', src: '/bg-4.jpg', label: 'Vía Láctea' },
-  { type: 'image', src: '/bg-5.jpg', label: 'Cielo Estrellado' },
-  { type: 'image', src: '/bg-6.jpg', label: 'Atardecer Cósmico' },
-  { type: 'image', src: '/bg-7.jpg', label: 'Universo Vintage' },
-  { type: 'image', src: '/bg-8.jpg', label: 'Galaxia Azul' },
-  { type: 'image', src: '/bg-9.jpg', label: 'Supernova' },
-  { type: 'image', src: '/bg-10.jpg', label: 'Amanecer Espacial' },
+  { type: 'image', src: './bg-home.jpg', label: 'Zen' },
+  { type: 'image', src: './bg-practicas.jpg', label: 'Prácticas' },
+  { type: 'image', src: './bg-music.jpg', label: 'Música' },
+  { type: 'image', src: './bg-stats.jpg', label: 'Estadísticas' },
+  { type: 'image', src: './bg-1.jpg', label: 'Galaxia Púrpura' },
+  { type: 'image', src: './bg-2.jpg', label: 'Nebulosa' },
+  { type: 'image', src: './bg-3.jpg', label: 'Espacio Profundo' },
+  { type: 'image', src: './bg-4.jpg', label: 'Vía Láctea' },
+  { type: 'image', src: './bg-5.jpg', label: 'Cielo Estrellado' },
+  { type: 'image', src: './bg-6.jpg', label: 'Atardecer Cósmico' },
+  { type: 'image', src: './bg-7.jpg', label: 'Universo Vintage' },
+  { type: 'image', src: './bg-8.jpg', label: 'Galaxia Azul' },
+  { type: 'image', src: './bg-9.jpg', label: 'Supernova' },
+  { type: 'image', src: './bg-10.jpg', label: 'Amanecer Espacial' },
 ];
 
 interface BackgroundContextValue {
